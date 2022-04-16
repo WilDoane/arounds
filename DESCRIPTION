@@ -1,0 +1,10 @@
+Package: arounds
+Type: Package
+Title: Addins containing workarounds for common issues
+Version: 0.1.0
+Authors@R: person("William", "Doane", "E. J." , "wil@DrDoane.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-5047-8286"))
+Description: Creates an RStudio Addin space for convenient workarounds
+License: CC0
+Encoding: UTF-8
+LazyData: true

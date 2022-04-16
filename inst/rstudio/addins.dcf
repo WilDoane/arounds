@@ -1,0 +1,5 @@
+Name: .R -> .Rmd -> Render
+Description: Workaround for a bug in officedown when files aren't suffixed .Rmd
+Binding: prerender
+Interactive: false
+
