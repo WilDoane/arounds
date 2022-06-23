@@ -3,3 +3,8 @@ Description: Workaround for a bug in officedown when files aren't suffixed .Rmd
 Binding: prerender
 Interactive: false
 
+Name: library()
+Description: Wrap selected text in a call to library(...)
+Binding: library_it
+Interactive: false
+
