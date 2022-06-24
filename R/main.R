@@ -16,22 +16,27 @@ prerender <- function() {
 }
 
 library_it <- function() {
-  current_row <- rstudioapi::getActiveDocumentContext()$selection[[1]]$range$start[[1]]
+  start_row <- rstudioapi::getActiveDocumentContext()$selection[[1]]$range$start[['row']]
+  end_row <- rstudioapi::getActiveDocumentContext()$selection[[1]]$range$end[['row']]
+
+  lapply(start_row:end_row, function(current_row) {
+    ranges <- rstudioapi::document_range(
+      c(current_row, 0),
+      c(current_row, Inf)
+    )
+
+    rstudioapi::setSelectionRanges(ranges)
+
+    source <- trimws(rstudioapi::selectionGet())
+
+    if (source != "") {
+      target <- rstudioapi::selectionSet(paste0("library(", source, ")"))
+    }
+  })
 
   ranges <- rstudioapi::document_range(
-    c(current_row, 0),
-    c(current_row, Inf)
-  )
-
-  rstudioapi::setSelectionRanges(ranges)
-
-  source <- trimws(rstudioapi::selectionGet())
-
-  target <- rstudioapi::selectionSet(paste0("library(", source, ")"))
-
-  ranges <- rstudioapi::document_range(
-    c(current_row + 1, Inf),
-    c(current_row + 1, Inf)
+    c(end_row + 1, Inf),
+    c(end_row + 1, Inf)
   )
 
   rstudioapi::setSelectionRanges(ranges)
