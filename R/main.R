@@ -15,6 +15,32 @@ prerender <- function() {
   unlink(path)
 }
 
+library_overload <- function() {
+  ranges <- rstudioapi::document_range(
+    c(1, 1),
+    c(1, 1)
+  )
+
+  rstudioapi::insertText(ranges,
+                         "`%!in%` <- function(x, table) { !(x %in% table) }
+
+# Defensive installation of missing packages
+library <- function(pkg, ...) {
+  pkg_name <- deparse(substitute(pkg))
+
+  if (pkg_name %!in% rownames(installed.packages())) {
+    install.packages(pkg_name, dependencies = TRUE)
+  }
+
+  base::library(pkg_name, ..., character.only = TRUE)
+}
+
+")
+
+}
+
+
+
 library_it <- function() {
   start_row <- rstudioapi::getActiveDocumentContext()$selection[[1]]$range$start[['row']]
   end_row <- rstudioapi::getActiveDocumentContext()$selection[[1]]$range$end[['row']]
@@ -42,4 +68,9 @@ library_it <- function() {
   rstudioapi::setSelectionRanges(ranges)
 
 }
+
+
+
+
+
 
